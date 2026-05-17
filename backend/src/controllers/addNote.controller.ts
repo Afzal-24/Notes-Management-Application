@@ -11,7 +11,7 @@ export const addNote = async (req: Request, res: Response) => {
   };
 
   try {
-    const { title, description, status } = req.body;
+    const { title, description, status } = req.body || {};
 
     if (!title || !description) {
       response.statusCode = 400;
@@ -35,6 +35,7 @@ export const addNote = async (req: Request, res: Response) => {
 
     response.statusCode = 500;
     response.message = "Internal server error";
+    response.showMessage = true;
     response.error = error;
 
     return sendResponse(response, res);
