@@ -5,6 +5,7 @@ import {
   type INoteStatus,
 } from "../models/notesManagement.model";
 import NotesKanbanCard from "./NotesKanbanCard";
+import { Plus } from "lucide-react";
 
 interface NotesKanbanColumnProps {
   status: INoteStatus;
@@ -46,19 +47,28 @@ const NotesKanbanColumn: React.FC<NotesKanbanColumnProps> = ({
       className="min-w-[320px] bg-[#F8FAFC] border border-gray-100 rounded-xl shadow-sm p-4 flex flex-col"
       style={{ height: "70vh" }}
     >
-      <div className="flex items-center gap-2 mb-3 pb-2">
-        <h3 className="text-sm font-semibold text-gray-900 truncate flex items-center gap-2">
-          <span
-            className={`w-1.5 h-1.5 rounded-full inline-block ${getRegistrationStatusDotColor(
-              status.status,
-            )}`}
-          />
-          <span className="font-bold">{getStatusLabel(status.status)}</span>
-        </h3>
-
-        <span className="text-sm font-medium text-gray-400">
-          ({notes?.length || 0})
-        </span>
+      <div className="flex items-center justify-between mb-3 pb-2">
+        <div>
+          <h3 className="text-sm font-semibold text-gray-900 truncate flex items-center gap-2">
+            <span
+              className={`w-1.5 h-1.5 rounded-full inline-block ${getRegistrationStatusDotColor(
+                status.status,
+              )}`}
+            />
+            <span className="font-bold">{getStatusLabel(status.status)}</span>
+            <span className="text-sm font-medium text-gray-400">
+              ({notes?.length || 0})
+            </span>
+          </h3>
+        </div>
+        <div>
+          <button
+            className="text-gray-500 hover:text-gray-600 transition border rounded-full p-1 focus:outline-none focus:ring-2 focus:ring-gray-300"
+            title="Add Note"
+          >
+            <Plus size={16} />
+          </button>
+        </div>
       </div>
 
       <div className="flex-1 overflow-y-auto space-y-3 pr-1">
