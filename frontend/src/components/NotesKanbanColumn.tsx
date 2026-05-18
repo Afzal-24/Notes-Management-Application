@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   NoteStatusEnum,
   type INote,
@@ -6,6 +6,7 @@ import {
 } from "../models/notesManagement.model";
 import NotesKanbanCard from "./NotesKanbanCard";
 import { Plus } from "lucide-react";
+import AddNoteModal from "./AddNoteModal";
 
 interface NotesKanbanColumnProps {
   status: INoteStatus;
@@ -16,6 +17,8 @@ const NotesKanbanColumn: React.FC<NotesKanbanColumnProps> = ({
   status,
   notes,
 }) => {
+  const [openModal, setOpenModal] = useState(false);
+
   const getRegistrationStatusDotColor = (status?: NoteStatusEnum): string => {
     switch (status) {
       case NoteStatusEnum.TODO:
@@ -43,10 +46,7 @@ const NotesKanbanColumn: React.FC<NotesKanbanColumnProps> = ({
   };
 
   return (
-    <div
-      className="min-w-[320px] bg-[#F8FAFC] border border-gray-100 rounded-xl shadow-sm p-4 flex flex-col"
-      style={{ height: "70vh" }}
-    >
+    <div className="min-w-[320px] bg-[#F8FAFC] border border-gray-100 rounded-xl shadow-sm p-4 flex flex-col">
       <div className="flex items-center justify-between mb-3 pb-2">
         <div>
           <h3 className="text-sm font-semibold text-gray-900 truncate flex items-center gap-2">
@@ -65,6 +65,7 @@ const NotesKanbanColumn: React.FC<NotesKanbanColumnProps> = ({
           <button
             className="text-gray-500 hover:text-gray-600 transition border rounded-full p-1 focus:outline-none focus:ring-2 focus:ring-gray-300"
             title="Add Note"
+            onClick={() => setOpenModal(true)}
           >
             <Plus size={16} />
           </button>
@@ -75,11 +76,16 @@ const NotesKanbanColumn: React.FC<NotesKanbanColumnProps> = ({
         {notes && notes.length > 0 ? (
           notes.map((note) => <NotesKanbanCard key={note._id} note={note} />)
         ) : (
-          <div className="flex text-xs text-gray-400 mt-4 h-[55vh] text-center justify-center items-end">
+          <div className="flex text-xs text-gray-400 mt-4 text-center justify-center items-end">
             No notes in this column
           </div>
         )}
       </div>
+      <AddNoteModal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        status={status.status}
+      />
     </div>
   );
 };

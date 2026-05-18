@@ -20,8 +20,8 @@ import {
 } from "lucide-react";
 import NotesKanbanBoard from "./components/NotesKanbanBoard";
 
-const ACCENT = "#4f46e5";
-const ACCENT_LIGHT = "#ede9fe";
+export const ACCENT = "#4f46e5";
+export const ACCENT_LIGHT = "#ede9fe";
 
 const sidebarIcons = [
   { icon: Home, active: false },
