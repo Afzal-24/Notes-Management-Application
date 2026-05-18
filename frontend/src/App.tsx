@@ -44,7 +44,7 @@ const App: React.FC = () => {
     <div className="flex h-screen bg-[#f5f6fa] font-sans">
       {/* Sidebar */}
       <div
-        className="w-[64px] bg-white flex flex-col items-center justify-between py-4"
+        className="w-16 bg-white flex flex-col items-center justify-between py-4"
         style={{ borderRight: "1.5px solid #ede9fe" }}
       >
         <div className="flex flex-col items-center gap-6">
@@ -85,7 +85,7 @@ const App: React.FC = () => {
       <div className="flex-1 flex flex-col min-w-0">
         {/* Topbar */}
         <div
-          className="h-[60px] bg-white px-6 flex items-center justify-between shrink-0"
+          className="h-15 bg-white px-6 flex items-center justify-between shrink-0"
           style={{ borderBottom: "1.5px solid #f0f0f7" }}
         >
           {/* Breadcrumb */}
@@ -176,7 +176,7 @@ const App: React.FC = () => {
             </div>
 
             <div className="flex flex-col items-end gap-3">
-              <div className="flex items-center gap-3 h-[32px]">
+              <div className="flex items-center gap-3 h-8">
                 <button className="flex items-center gap-1.5 text-xs text-gray-600 font-medium hover:text-gray-700 transition">
                   <SlidersHorizontal size={15} />
                   Filter
