@@ -46,7 +46,7 @@ const NotesKanbanColumn: React.FC<NotesKanbanColumnProps> = ({
   };
 
   return (
-    <div className="w-87.5 min-w-87.5 max-w-87.5 bg-[#F8FAFC] border border-gray-100 rounded-xl shadow-sm px-2 py-4 flex flex-col overflow-hidden">
+    <div className="w-86 min-w-86 max-w-86 bg-[#F8FAFC] border border-gray-100 rounded-xl shadow-sm px-2 py-4 flex flex-col overflow-hidden">
       <div className="flex items-center justify-between mb-3 pb-2">
         <div>
           <h3 className="text-sm font-semibold text-gray-900 truncate flex items-center gap-2">
