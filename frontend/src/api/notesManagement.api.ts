@@ -14,3 +14,14 @@ export const addNoteApi = async (data: {
 
   return response.data;
 };
+
+export const updateNoteStatusApi = async (data: {
+  noteId: string;
+  currentStatus: string;
+  destinationStatus: string;
+  currentIndex: number;
+  destinationIndex: number;
+}) => {
+  const response = await axiosSetup.patch("/notes/update-note-status", data);
+  return response.data;
+};

@@ -1,12 +1,24 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addNoteApi, getNoteStatusesApi } from "../../api/notesManagement.api";
-import type { INoteStatus } from "../../models/notesManagement.model";
+import {
+  createAsyncThunk,
+  createSlice,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
+import {
+  addNoteApi,
+  getNoteStatusesApi,
+  updateNoteStatusApi,
+} from "../../api/notesManagement.api";
+import type {
+  INoteStatus,
+  NoteStatusEnum,
+} from "../../models/notesManagement.model";
 
 interface NotesManagementState {
   noteStatuses: INoteStatus[];
   loading: boolean;
   loadingStates: {
     addNoteLoading: boolean;
+    updateNoteStatusLoading: boolean;
   };
 }
 
@@ -15,6 +27,7 @@ const initialState: NotesManagementState = {
   loading: false,
   loadingStates: {
     addNoteLoading: false,
+    updateNoteStatusLoading: false,
   },
 };
 
@@ -51,10 +64,113 @@ export const addNote = createAsyncThunk(
   },
 );
 
+export const updateNoteStatus = createAsyncThunk(
+  "notesManagement/updateNoteStatus",
+  async (
+    noteData: {
+      currentStatus: string;
+      destinationStatus: string;
+      noteId: string;
+      destinationIndex: number;
+      currentIndex: number;
+    },
+    { rejectWithValue },
+  ) => {
+    const {
+      currentStatus,
+      destinationStatus,
+      noteId,
+      destinationIndex,
+      currentIndex,
+    } = noteData;
+
+    try {
+      const response = await updateNoteStatusApi({
+        currentStatus,
+        destinationStatus,
+        noteId,
+        currentIndex,
+        destinationIndex,
+      });
+      return response;
+    } catch (error: any) {
+      console.error("Error updating note status:", error);
+      return rejectWithValue(error?.message || "Failed to update note status.");
+    }
+  },
+);
+
 const notesManagementSlice = createSlice({
   name: "notesManagement",
   initialState,
-  reducers: {},
+  reducers: {
+    updateNoteStatusLocally: (
+      state,
+      action: PayloadAction<{
+        noteId: string;
+        newStatus: string;
+        sourceStatus: string;
+        destinationIndex?: number;
+      }>,
+    ) => {
+      const { noteId, newStatus, sourceStatus, destinationIndex } =
+        action.payload;
+
+      const sourceStatusObj = state.noteStatuses.find(
+        (s) => s.status === sourceStatus,
+      );
+      if (!sourceStatusObj) return;
+
+      const noteIndex = sourceStatusObj.notes.findIndex(
+        (n: any) => n._id === noteId,
+      );
+      if (noteIndex === -1) return;
+
+      const note = sourceStatusObj.notes[noteIndex];
+
+      // Remove from source
+      sourceStatusObj.notes.splice(noteIndex, 1);
+
+      // Add to destination
+      const destStatusObj = state.noteStatuses.find(
+        (s) => s.status === newStatus,
+      );
+
+      if (destStatusObj) {
+        if (destinationIndex !== undefined && destinationIndex >= 0) {
+          destStatusObj.notes.splice(destinationIndex, 0, {
+            ...note,
+            status: newStatus as NoteStatusEnum,
+          });
+        } else {
+          destStatusObj.notes.unshift({
+            ...note,
+            status: newStatus as NoteStatusEnum,
+          });
+        }
+      }
+    },
+
+    reorderNotesInColumn: (
+      state,
+      action: PayloadAction<{
+        status: string;
+        dragIndex: number;
+        hoverIndex: number;
+      }>,
+    ) => {
+      const { status, dragIndex, hoverIndex } = action.payload;
+      const statusObj = state.noteStatuses.find((s) => s.status === status);
+
+      if (
+        statusObj &&
+        statusObj.notes.length > Math.max(dragIndex, hoverIndex)
+      ) {
+        const [removed] = statusObj.notes.splice(dragIndex, 1);
+        statusObj.notes.splice(hoverIndex, 0, removed);
+      }
+    },
+  },
 
   extraReducers: (builder) => {
     builder
@@ -76,8 +192,19 @@ const notesManagementSlice = createSlice({
       })
       .addCase(addNote.rejected, (state) => {
         state.loadingStates.addNoteLoading = false;
+      })
+      .addCase(updateNoteStatus.pending, (state) => {
+        state.loadingStates.updateNoteStatusLoading = true;
+      })
+      .addCase(updateNoteStatus.fulfilled, (state) => {
+        state.loadingStates.updateNoteStatusLoading = false;
+      })
+      .addCase(updateNoteStatus.rejected, (state) => {
+        state.loadingStates.updateNoteStatusLoading = false;
       });
   },
 });
 
+export const { updateNoteStatusLocally, reorderNotesInColumn } =
+  notesManagementSlice.actions;
 export default notesManagementSlice.reducer;
