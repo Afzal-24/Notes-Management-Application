@@ -109,13 +109,16 @@ const NotesKanbanBoard: React.FC = () => {
 
     if (currentIndex === -1) return;
 
-    const overNoteId = over.id as string;
-    let destinationIndex = -1;
+    const overId = over.id as string;
 
-    if (overNoteId !== destStatus) {
-      destinationIndex = destStatusObj.notes.findIndex(
-        (n: any) => n._id === overNoteId,
-      );
+    let destinationIndex = destStatusObj.notes.length;
+
+    const overNoteIndex = destStatusObj.notes.findIndex(
+      (n: any) => n._id === overId,
+    );
+
+    if (overNoteIndex !== -1) {
+      destinationIndex = overNoteIndex;
     }
 
     if (sourceStatus === destStatus) {
@@ -152,7 +155,7 @@ const NotesKanbanBoard: React.FC = () => {
         sourceStatus,
         destinationStatus: destStatus,
         currentIndex,
-        destinationIndex: destinationIndex >= 0 ? destinationIndex : 0,
+        destinationIndex,
       });
     }
   };
