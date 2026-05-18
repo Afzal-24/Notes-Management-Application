@@ -87,7 +87,7 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
             size={18}
             {...attributes}
             {...listeners}
-            className="cursor-grab active:cursor-grabbing text-gray-400 flex-shrink-0"
+            className="cursor-grab active:cursor-grabbing text-gray-400 shrink-0"
           />
         </div>
 

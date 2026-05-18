@@ -171,7 +171,7 @@ const NotesKanbanBoard: React.FC = () => {
     >
       <DragOverlay>
         {activeNote ? (
-          <div className="pointer-events-none opacity-80 transform rotate-5">
+          <div className="pointer-events-none opacity-80 ">
             <NotesKanbanCard note={activeNote} />
           </div>
         ) : null}
