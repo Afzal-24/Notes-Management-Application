@@ -1,12 +1,18 @@
-interface Note {
+export enum NoteStatusEnum {
+  TODO = "todo",
+  IN_PROGRESS = "inProgress",
+  DONE = "done",
+}
+
+export interface INote {
   _id: string;
   title: string;
   description: string;
-  status: string;
+  status: NoteStatusEnum;
 }
 
-export interface NoteStatus {
+export interface INoteStatus {
   _id: string;
-  status: string;
-  notes: Note[];
+  status: NoteStatusEnum;
+  notes: INote[];
 }

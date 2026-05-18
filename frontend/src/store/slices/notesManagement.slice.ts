@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getNoteStatusesApi } from "../../api/notesManagement.api";
-import type { NoteStatus } from "../../models/notesManagement.model";
+import type { INoteStatus } from "../../models/notesManagement.model";
 
 interface NotesManagementState {
-  noteStatuses: NoteStatus[];
+  noteStatuses: INoteStatus[];
   loading: boolean;
 }
 

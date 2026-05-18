@@ -18,6 +18,7 @@ import {
   Pause,
   Rows3,
 } from "lucide-react";
+import NotesKanbanBoard from "./components/NotesKanbanBoard";
 
 const ACCENT = "#4f46e5";
 const ACCENT_LIGHT = "#ede9fe";
@@ -148,7 +149,7 @@ const App: React.FC = () => {
                 </h1>
 
                 {/* View Buttons */}
-                <div className="flex items-center gap-2 mt-3 bg-gray-100 p-2 rounded-full w-fit">
+                <div className="flex items-center gap-2 mt-3 bg-[#F1F5F9] p-2 rounded-full w-fit">
                   {viewButtons.map(({ label, icon: Icon }, i) => (
                     <button
                       key={label}
@@ -198,7 +199,9 @@ const App: React.FC = () => {
           </div>
 
           <div className="text-gray-300 text-sm mt-8 text-center">
-            — Kanban board —
+            <div>
+              <NotesKanbanBoard />
+            </div>
           </div>
         </div>
       </div>
