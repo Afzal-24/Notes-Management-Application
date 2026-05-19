@@ -1,6 +1,6 @@
 import React from "react";
 import { X } from "lucide-react";
-import { ACCENT } from "../pages/App";
+import { ACCENT } from "../pages/Dashboard";
 
 interface DeleteConfirmationModalProps {
   open: boolean;

@@ -45,7 +45,7 @@ const viewButtons = [
   { label: "Row View", icon: Rows3 },
 ];
 
-const App: React.FC = () => {
+const Dashboard: React.FC = () => {
   const noteStatuses = useSelector(
     (state: RootState) => state.noteManagement.noteStatuses,
   );
@@ -361,4 +361,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Dashboard;

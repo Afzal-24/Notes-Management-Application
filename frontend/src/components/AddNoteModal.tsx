@@ -7,7 +7,7 @@ import {
   getNoteStatuses,
 } from "../store/slices/notesManagement.slice";
 import { NoteStatusEnum } from "../models/notesManagement.model";
-import { ACCENT } from "../pages/App";
+import { ACCENT } from "../pages/Dashboard";
 import { toast } from "sonner";
 
 interface AddNoteModalProps {

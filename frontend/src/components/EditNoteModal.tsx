@@ -5,7 +5,7 @@ import type { RootDispatch, RootState } from "../store";
 import { updateNote } from "../store/slices/notesManagement.slice";
 import type { INote } from "../models/notesManagement.model";
 import { toast } from "sonner";
-import { ACCENT } from "../pages/App";
+import { ACCENT } from "../pages/Dashboard";
 
 interface EditNoteModalProps {
   open: boolean;
