@@ -50,8 +50,8 @@ const NotesListView: React.FC<NotesListViewProps> = ({ noteStatuses }) => {
   const allNotes: INote[] = noteStatuses.flatMap((s) => s.notes);
 
   return (
-    <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden">
-      <div className="grid grid-cols-12 gap-4 px-6 py-4 border-b border-gray-100 bg-gray-50 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+    <div className="bg-white rounded-3xl border border-gray-100 overflow-x-auto">
+      <div className="min-w-175 grid grid-cols-12 gap-2 md:gap-4 px-3 md:px-6 py-3 md:py-4 border-b border-gray-100 bg-gray-50 text-[10px] md:text-xs font-semibold text-gray-500 uppercase tracking-wide">
         <div className="col-span-3 text-left">Title</div>
         <div className="col-span-6">Description</div>
         <div className="col-span-3">Status</div>
@@ -65,7 +65,7 @@ const NotesListView: React.FC<NotesListViewProps> = ({ noteStatuses }) => {
             return (
               <div
                 key={note._id}
-                className="grid grid-cols-12 gap-4 px-6 py-5 hover:bg-gray-50 transition-all duration-200 items-center"
+                className="min-w-175 grid grid-cols-12 gap-2 md:gap-4 px-3 md:px-6 py-3 md:py-5 hover:bg-gray-50 transition-all duration-200 items-center"
               >
                 <div className="col-span-3 min-w-0">
                   <h3
