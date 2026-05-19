@@ -1,13 +1,13 @@
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import Dashboard from "./pages/Dashboard.tsx";
 import { Provider } from "react-redux";
 import { store } from "./store/index.ts";
 import { Toaster } from "sonner";
+import App from "./App.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <Toaster position="top-right" />
-    <Dashboard />
+    <App />
   </Provider>,
 );

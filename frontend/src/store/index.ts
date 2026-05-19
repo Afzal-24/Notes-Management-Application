@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import noteManagementReducer from "./slices/notesManagement.slice";
+import authReducer from "./slices/auth.slice";
 
 export const store = configureStore({
   reducer: {
+    auth: authReducer,
     noteManagement: noteManagementReducer,
   },
 });

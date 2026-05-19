@@ -19,12 +19,15 @@ import {
   Rows3,
   X,
   Menu,
+  LogOut,
 } from "lucide-react";
 import NotesKanbanBoard from "../components/NotesKanbanBoard";
 import { useState } from "react";
 import NotesListView from "../components/NotesListView";
-import { useSelector } from "react-redux";
-import type { RootState } from "../store";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootDispatch, RootState } from "../store";
+import { logout } from "../store/slices/auth.slice";
+import { useNavigate } from "react-router-dom";
 
 export const ACCENT = "#4f46e5";
 export const ACCENT_LIGHT = "#ede9fe";
@@ -46,12 +49,20 @@ const viewButtons = [
 ];
 
 const Dashboard: React.FC = () => {
+  const dispatch = useDispatch<RootDispatch>();
+  const navigate = useNavigate();
+
   const noteStatuses = useSelector(
     (state: RootState) => state.noteManagement.noteStatuses,
   );
 
   const [view, setView] = useState<"grid" | "list">("grid");
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
 
   return (
     <div className="flex h-screen bg-[#f5f6fa] font-sans overflow-hidden">
@@ -83,6 +94,14 @@ const Dashboard: React.FC = () => {
         <div className="flex flex-col items-center gap-4">
           <div className="w-10 h-10 flex items-center justify-center rounded-xl cursor-pointer transition-all duration-150 text-gray-400 hover:bg-indigo-50 hover:text-indigo-600">
             <Settings size={20} />
+          </div>
+
+          <div
+            title="Logout"
+            className="w-10 h-10 flex items-center justify-center rounded-xl cursor-pointer transition-all duration-150 text-gray-400 hover:bg-indigo-50 hover:text-indigo-600"
+            onClick={handleLogout}
+          >
+            <LogOut size={20} />
           </div>
 
           <img
@@ -130,6 +149,13 @@ const Dashboard: React.FC = () => {
               <span className="text-sm font-medium">Menu Item</span>
             </button>
           ))}
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-3 px-4 py-3 rounded-2xl text-gray-600 hover:bg-red-50 hover:text-red-600 transition mt-4"
+          >
+            <LogOut size={20} />
+            <span className="text-sm font-medium">Logout</span>
+          </button>
         </div>
 
         <div className="absolute bottom-5 left-0 w-full px-4">
