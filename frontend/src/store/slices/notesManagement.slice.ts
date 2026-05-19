@@ -228,8 +228,20 @@ const notesManagementSlice = createSlice({
       .addCase(updateNote.pending, (state) => {
         state.loadingStates.updateNoteLoading = true;
       })
-      .addCase(updateNote.fulfilled, (state) => {
+      .addCase(updateNote.fulfilled, (state, action) => {
         state.loadingStates.updateNoteLoading = false;
+
+        const updatedNote = action.payload;
+
+        state.noteStatuses.forEach((status) => {
+          const noteIndex = status.notes.findIndex(
+            (note) => note._id === updatedNote._id,
+          );
+
+          if (noteIndex !== -1) {
+            status.notes[noteIndex] = updatedNote;
+          }
+        });
       })
       .addCase(updateNote.rejected, (state) => {
         state.loadingStates.updateNoteLoading = false;
