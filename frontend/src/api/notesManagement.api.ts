@@ -41,3 +41,11 @@ export const updateNoteApi = async (data: {
 
   return response.data;
 };
+
+export const deleteNoteApi = async (noteId: string) => {
+  const response = await axiosSetup.delete(
+    `/notes/delete-note?noteId=${noteId}`,
+  );
+
+  return response.data;
+};

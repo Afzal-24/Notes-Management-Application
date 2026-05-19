@@ -1,15 +1,29 @@
 import React, { useState } from "react";
 import { NoteStatusEnum, type INote } from "../models/notesManagement.model";
 import { useSortable } from "@dnd-kit/sortable";
-import { Edit, EllipsisVertical, GripVertical } from "lucide-react";
+import { Edit, EllipsisVertical, GripVertical, Trash2 } from "lucide-react";
 import { CSS } from "@dnd-kit/utilities";
 import EditNoteModal from "./EditNoteModal";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootDispatch, RootState } from "../store";
+import { deleteNote } from "../store/slices/notesManagement.slice";
+import DeleteModal from "./DeleteModal";
 
 interface NotesKanbanCardProps {
   note: INote;
 }
 
 const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
+  const dispatch = useDispatch<RootDispatch>();
+
+  const { deleteNoteLoading } = useSelector(
+    (state: RootState) => state.noteManagement.loadingStates,
+  );
+
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
+
   const {
     attributes,
     listeners,
@@ -21,9 +35,6 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
     id: note._id!,
     data: { note, status: note.status },
   });
-
-  const [openMenu, setOpenMenu] = useState(false);
-  const [openEditModal, setOpenEditModal] = useState(false);
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -60,6 +71,16 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
 
       default:
         return "bg-gray-300";
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await dispatch(deleteNote(note._id)).unwrap();
+
+      setOpenDeleteModal(false);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -114,6 +135,16 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
                   <Edit size={14} />
                   Edit
                 </button>
+                <button
+                  onClick={() => {
+                    setOpenMenu(false);
+                    setOpenDeleteModal(true);
+                  }}
+                  className="w-full flex items-center gap-2 px-3 py-2 rounded-xl text-xs text-gray-700 hover:bg-gray-50 transition"
+                >
+                  <Trash2 size={14} />
+                  Delete
+                </button>
               </div>
             )}
           </div>
@@ -142,6 +173,12 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
         open={openEditModal}
         onClose={() => setOpenEditModal(false)}
         note={note}
+      />
+      <DeleteModal
+        open={openDeleteModal}
+        onClose={() => setOpenDeleteModal(false)}
+        onConfirm={handleDelete}
+        loading={deleteNoteLoading}
       />
     </>
   );

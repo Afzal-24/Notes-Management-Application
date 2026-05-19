@@ -5,6 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import {
   addNoteApi,
+  deleteNoteApi,
   getNoteStatusesApi,
   updateNoteApi,
   updateNoteStatusApi,
@@ -21,6 +22,7 @@ interface NotesManagementState {
     addNoteLoading: boolean;
     updateNoteStatusLoading: boolean;
     updateNoteLoading: boolean;
+    deleteNoteLoading: boolean;
   };
 }
 
@@ -31,6 +33,7 @@ const initialState: NotesManagementState = {
     addNoteLoading: false,
     updateNoteStatusLoading: false,
     updateNoteLoading: false,
+    deleteNoteLoading: false,
   },
 };
 
@@ -115,6 +118,19 @@ export const updateNote = createAsyncThunk(
   ) => {
     try {
       const response = await updateNoteApi(data);
+
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || error.message);
+    }
+  },
+);
+
+export const deleteNote = createAsyncThunk(
+  "notesManagement/deleteNote",
+  async (noteId: string, { rejectWithValue }) => {
+    try {
+      const response = await deleteNoteApi(noteId);
 
       return response.data;
     } catch (error: any) {
@@ -245,6 +261,23 @@ const notesManagementSlice = createSlice({
       })
       .addCase(updateNote.rejected, (state) => {
         state.loadingStates.updateNoteLoading = false;
+      })
+      .addCase(deleteNote.pending, (state) => {
+        state.loadingStates.deleteNoteLoading = true;
+      })
+      .addCase(deleteNote.fulfilled, (state, action) => {
+        state.loadingStates.deleteNoteLoading = false;
+
+        const deletedNote = action.payload;
+
+        state.noteStatuses.forEach((status) => {
+          status.notes = status.notes.filter(
+            (note) => note._id !== deletedNote._id,
+          );
+        });
+      })
+      .addCase(deleteNote.rejected, (state) => {
+        state.loadingStates.deleteNoteLoading = false;
       });
   },
 });
