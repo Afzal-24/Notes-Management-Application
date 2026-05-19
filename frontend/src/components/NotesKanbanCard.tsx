@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NoteStatusEnum, type INote } from "../models/notesManagement.model";
 import { useSortable } from "@dnd-kit/sortable";
 import { Edit, EllipsisVertical, GripVertical, Trash2 } from "lucide-react";
@@ -84,6 +84,22 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
     }
   };
 
+  const menuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setOpenMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <>
       <div
@@ -108,7 +124,7 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
             </p>
           </div>
 
-          <div className="flex items-start gap-1 relative">
+          <div ref={menuRef} className="flex items-start gap-1 relative">
             <button
               onClick={() => setOpenMenu((prev) => !prev)}
               className="p-1 rounded-lg hover:bg-gray-100 transition"
