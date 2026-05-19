@@ -14,9 +14,6 @@ export const logIn = async (req: Request, res: Response) => {
       });
     }
 
-    console.log(req.body);
-    console.log(email, "email");
-
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -26,14 +23,7 @@ export const logIn = async (req: Request, res: Response) => {
       });
     }
 
-    console.log(user, "user");
-
-    console.log(password, "password");
-    console.log(user.password, "user password");
-
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
-
-    console.log(isPasswordCorrect, "isPasswordCorrect");
 
     if (!isPasswordCorrect) {
       return res.status(400).json({
