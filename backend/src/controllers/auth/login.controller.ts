@@ -14,14 +14,14 @@ export const logIn = async (req: Request, res: Response) => {
       });
     }
 
-    const existingUser = await User.findOne({ email });
+  const existingUser = await User.findOne();
 
-    if (existingUser) {
-      return res.status(400).json({
-        success: false,
-        message: "User already exists",
-      });
-    }
+  if (existingUser) {
+    return res.status(400).json({
+      success: false,
+      message: "Only one user can be created",
+    });
+  }
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
