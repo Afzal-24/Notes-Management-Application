@@ -61,11 +61,11 @@ const NotesKanbanColumn: React.FC<NotesKanbanColumnProps> = ({
   return (
     <div
       ref={setNodeRef}
-      className={`w-86 min-w-86 max-w-86 bg-[#F8FAFC] border border-gray-100 rounded-xl shadow-sm px-2 py-4 flex flex-col overflow-hidden transition-all duration-150${
+      className={`w-86 min-w-86 max-w-86 bg-[#F8FAFC] border border-gray-100 rounded-3xl shadow-sm px-2 py-4 flex flex-col overflow-hidden transition-all duration-150${
         isOver ? "bg-blue-50 border-blue-400" : "border-gray-100"
       }`}
     >
-      <div className="flex items-center justify-between mb-3 pb-2">
+      <div className="flex items-center justify-between mb-3 pb-2 px-2">
         <div>
           <h3 className="text-sm font-semibold text-gray-900 truncate flex items-center gap-2">
             <span

@@ -19,6 +19,10 @@ import {
   Rows3,
 } from "lucide-react";
 import NotesKanbanBoard from "./components/NotesKanbanBoard";
+import { useState } from "react";
+import NotesListView from "./components/NotesListView";
+import { useSelector } from "react-redux";
+import type { RootState } from "./store";
 
 export const ACCENT = "#4f46e5";
 export const ACCENT_LIGHT = "#ede9fe";
@@ -40,6 +44,12 @@ const viewButtons = [
 ];
 
 const App: React.FC = () => {
+  const noteStatuses = useSelector(
+    (state: RootState) => state.noteManagement.noteStatuses,
+  );
+
+  const [view, setView] = useState<"grid" | "list">("grid");
+
   return (
     <div className="flex h-screen bg-[#f5f6fa] font-sans">
       {/* Sidebar */}
@@ -150,27 +160,40 @@ const App: React.FC = () => {
 
                 {/* View Buttons */}
                 <div className="flex items-center gap-2 mt-3 bg-[#F1F5F9] p-2 rounded-full w-fit">
-                  {viewButtons.map(({ label, icon: Icon }, i) => (
-                    <button
-                      key={label}
-                      className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition"
-                      style={
-                        i === 1
-                          ? {
-                              background: "#fff",
-                              color: "#555",
-                              border: "none",
-                              boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-                            }
-                          : {
-                              color: "#555",
-                            }
-                      }
-                    >
-                      <Icon size={13} strokeWidth={2.7} />
-                      {label}
-                    </button>
-                  ))}
+                  {viewButtons.map(({ label, icon: Icon }, i) => {
+                    const currentView =
+                      label === "Grid View"
+                        ? "grid"
+                        : label === "List View"
+                          ? "list"
+                          : "";
+
+                    const isActive = view === currentView;
+
+                    return (
+                      <button
+                        key={label}
+                        onClick={() =>
+                          currentView && setView(currentView as "grid" | "list")
+                        }
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition"
+                        style={
+                          isActive
+                            ? {
+                                background: "#fff",
+                                color: "#555",
+                                boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+                              }
+                            : {
+                                color: "#555",
+                              }
+                        }
+                      >
+                        <Icon size={13} strokeWidth={2.7} />
+                        {label}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -200,7 +223,11 @@ const App: React.FC = () => {
 
           <div className="text-gray-300 text-sm mt-8 text-center">
             <div>
-              <NotesKanbanBoard />
+              {view === "grid" ? (
+                <NotesKanbanBoard />
+              ) : (
+                <NotesListView noteStatuses={noteStatuses} />
+              )}
             </div>
           </div>
         </div>

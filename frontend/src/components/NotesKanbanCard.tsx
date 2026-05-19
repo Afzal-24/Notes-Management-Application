@@ -64,7 +64,7 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
       <div
         ref={setNodeRef}
         style={style}
-        className="w-full min-w-0 group bg-white rounded-xl text-left p-4 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-grab active:cursor-grabbing"
+        className="w-full min-w-0 group bg-white rounded-2xl text-left p-4 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-grab active:cursor-grabbing"
       >
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
