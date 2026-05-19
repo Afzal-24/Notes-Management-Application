@@ -49,8 +49,6 @@ const EditNoteModal: React.FC<EditNoteModalProps> = ({
         }),
       ).unwrap();
 
-      toast.success("Note updated successfully");
-
       onClose();
     } catch (error) {
       console.log(error);
@@ -63,7 +61,9 @@ const EditNoteModal: React.FC<EditNoteModalProps> = ({
       <div className="w-full max-w-md rounded-3xl bg-white shadow-2xl border border-gray-100 overflow-hidden">
         <div className="flex justify-between px-6 py-5 border-b">
           <div>
-            <h2 className="text-lg font-bold text-gray-800">Edit Note</h2>
+            <h2 className="text-lg text-left font-bold text-gray-800">
+              Edit Note
+            </h2>
 
             <p className="text-sm text-gray-500 mt-1">
               Update note information
@@ -78,7 +78,7 @@ const EditNoteModal: React.FC<EditNoteModalProps> = ({
           </button>
         </div>
 
-        <div className="p-6 space-y-5">
+        <div className="p-6 space-y-5 text-left">
           <div>
             <label className="text-sm font-medium text-gray-700 mb-2 block">
               Title

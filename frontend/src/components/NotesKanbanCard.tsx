@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { NoteStatusEnum, type INote } from "../models/notesManagement.model";
 import { useSortable } from "@dnd-kit/sortable";
-import { Edit, EllipsisVertical, GripVertical, Pencil } from "lucide-react";
+import { Edit, EllipsisVertical, GripVertical } from "lucide-react";
 import { CSS } from "@dnd-kit/utilities";
 import EditNoteModal from "./EditNoteModal";
 
