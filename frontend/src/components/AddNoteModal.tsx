@@ -60,7 +60,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-      <div className="w-full max-w-md rounded-3xl bg-white shadow-2xl border border-gray-100 overflow-hidden">
+      <div className="w-full h-full sm:h-auto sm:max-w-md rounded-xl bg-white shadow-2xl border border-gray-100 overflow-y-auto">
         <div className="flex justify-between px-6 py-5 border-b">
           <div className="text-left">
             <h2 className="text-lg font-bold text-gray-800">Create New Note</h2>
@@ -108,10 +108,10 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-3 px-6 py-4 border-t bg-[#fafafa]">
+        <div className="flex flex-col sm:flex-row items-center justify-end gap-3 px-6 py-4 border-t bg-[#fafafa]">
           <button
             onClick={onClose}
-            className="px-5 py-2.5 rounded-full text-sm font-medium border border-[#ede9fe] text-[#4f46e5] bg-white transition hover:bg-[#ede9fe]"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-full text-sm font-medium border border-[#ede9fe] text-[#4f46e5] bg-white transition hover:bg-[#ede9fe]"
           >
             Cancel
           </button>
@@ -119,7 +119,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
           <button
             onClick={handleCreate}
             disabled={addNoteLoading}
-            className="px-5 py-2.5 rounded-full text-sm font-semibold text-white transition disabled:opacity-50 bg-[#4f46e5] hover:opacity-90"
+            className="w-full sm:w-auto px-5 py-2.5 rounded-full text-sm font-semibold text-white transition disabled:opacity-50 bg-[#4f46e5] hover:opacity-90"
           >
             {addNoteLoading ? "Creating..." : "Create Note"}
           </button>
