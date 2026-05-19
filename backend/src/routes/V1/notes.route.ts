@@ -3,6 +3,7 @@ import { addNote } from "../../controllers/addNote.controller";
 import authenticate from "../../middleware/auth.middleware";
 import { getNoteStatuses } from "../../controllers/getNoteStatuses.controller";
 import updateNoteStatus from "../../controllers/updateNoteStatus.controller";
+import { updateNote } from "../../controllers/updateNote.controller";
 
 const router = express.Router();
 
@@ -22,6 +23,12 @@ router.patch(
   "/update-note-status",
   //  authenticate,
   updateNoteStatus,
+);
+
+router.patch(
+  "/update-note",
+  //  authenticate,
+  updateNote,
 );
 
 export default router;
