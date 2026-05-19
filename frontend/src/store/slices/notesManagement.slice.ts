@@ -6,6 +6,7 @@ import {
 import {
   addNoteApi,
   getNoteStatusesApi,
+  updateNoteApi,
   updateNoteStatusApi,
 } from "../../api/notesManagement.api";
 import type {
@@ -19,6 +20,7 @@ interface NotesManagementState {
   loadingStates: {
     addNoteLoading: boolean;
     updateNoteStatusLoading: boolean;
+    updateNoteLoading: boolean;
   };
 }
 
@@ -28,6 +30,7 @@ const initialState: NotesManagementState = {
   loadingStates: {
     addNoteLoading: false,
     updateNoteStatusLoading: false,
+    updateNoteLoading: false,
   },
 };
 
@@ -96,6 +99,26 @@ export const updateNoteStatus = createAsyncThunk(
     } catch (error: any) {
       console.error("Error updating note status:", error);
       return rejectWithValue(error?.message || "Failed to update note status.");
+    }
+  },
+);
+
+export const updateNote = createAsyncThunk(
+  "notesManagement/updateNote",
+  async (
+    data: {
+      noteId: string;
+      title: string;
+      description: string;
+    },
+    { rejectWithValue },
+  ) => {
+    try {
+      const response = await updateNoteApi(data);
+
+      return response.data;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || error.message);
     }
   },
 );
@@ -201,6 +224,15 @@ const notesManagementSlice = createSlice({
       })
       .addCase(updateNoteStatus.rejected, (state) => {
         state.loadingStates.updateNoteStatusLoading = false;
+      })
+      .addCase(updateNote.pending, (state) => {
+        state.loadingStates.updateNoteLoading = true;
+      })
+      .addCase(updateNote.fulfilled, (state) => {
+        state.loadingStates.updateNoteLoading = false;
+      })
+      .addCase(updateNote.rejected, (state) => {
+        state.loadingStates.updateNoteLoading = false;
       });
   },
 });

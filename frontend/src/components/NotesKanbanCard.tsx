@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { NoteStatusEnum, type INote } from "../models/notesManagement.model";
 import { useSortable } from "@dnd-kit/sortable";
-import { GripVertical } from "lucide-react";
+import { Edit, EllipsisVertical, GripVertical, Pencil } from "lucide-react";
 import { CSS } from "@dnd-kit/utilities";
+import EditNoteModal from "./EditNoteModal";
 
 interface NotesKanbanCardProps {
   note: INote;
@@ -20,6 +21,9 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
     id: note._id!,
     data: { note, status: note.status },
   });
+
+  const [openMenu, setOpenMenu] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -83,12 +87,36 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
             </p>
           </div>
 
-          <GripVertical
-            size={18}
-            {...attributes}
-            {...listeners}
-            className="cursor-grab active:cursor-grabbing text-gray-400 shrink-0"
-          />
+          <div className="flex items-start gap-1 relative">
+            <button
+              onClick={() => setOpenMenu((prev) => !prev)}
+              className="p-1 rounded-lg hover:bg-gray-100 transition"
+            >
+              <EllipsisVertical size={16} className="text-gray-500" />
+            </button>
+
+            <GripVertical
+              size={18}
+              {...attributes}
+              {...listeners}
+              className="cursor-grab active:cursor-grabbing text-gray-400 shrink-0 mt-1 "
+            />
+
+            {openMenu && (
+              <div className="absolute right-0 top-8 w-36 bg-white border border-gray-100 shadow-xl rounded-2xl p-1 z-50">
+                <button
+                  onClick={() => {
+                    setOpenMenu(false);
+                    setOpenEditModal(true);
+                  }}
+                  className="w-full flex items-center gap-2 px-3 py-1 rounded-xl text-xs text-gray-700 hover:bg-gray-50 transition"
+                >
+                  <Edit size={14} />
+                  Edit
+                </button>
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="mt-2">
@@ -110,6 +138,11 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
           </div>
         </div>
       </div>
+      <EditNoteModal
+        open={openEditModal}
+        onClose={() => setOpenEditModal(false)}
+        note={note}
+      />
     </>
   );
 };

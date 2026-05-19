@@ -18,11 +18,11 @@ import {
   Pause,
   Rows3,
 } from "lucide-react";
-import NotesKanbanBoard from "./components/NotesKanbanBoard";
+import NotesKanbanBoard from "../components/NotesKanbanBoard";
 import { useState } from "react";
-import NotesListView from "./components/NotesListView";
+import NotesListView from "../components/NotesListView";
 import { useSelector } from "react-redux";
-import type { RootState } from "./store";
+import type { RootState } from "../store";
 
 export const ACCENT = "#4f46e5";
 export const ACCENT_LIGHT = "#ede9fe";
@@ -160,7 +160,7 @@ const App: React.FC = () => {
 
                 {/* View Buttons */}
                 <div className="flex items-center gap-2 mt-3 bg-[#F1F5F9] p-2 rounded-full w-fit">
-                  {viewButtons.map(({ label, icon: Icon }, i) => {
+                  {viewButtons.map(({ label, icon: Icon }) => {
                     const currentView =
                       label === "Grid View"
                         ? "grid"

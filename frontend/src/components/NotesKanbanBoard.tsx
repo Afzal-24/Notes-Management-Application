@@ -32,7 +32,7 @@ const NotesKanbanBoard: React.FC = () => {
 
   const sensors = useSensors(useSensor(PointerSensor));
 
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [, setActiveId] = useState<string | null>(null);
   const [overColumnId, setOverColumnId] = useState<string | null>(null);
   const [activeNote, setActiveNote] = useState<INote | null>(null);
 

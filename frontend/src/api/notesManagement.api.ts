@@ -25,3 +25,19 @@ export const updateNoteStatusApi = async (data: {
   const response = await axiosSetup.patch("/notes/update-note-status", data);
   return response.data;
 };
+
+export const updateNoteApi = async (data: {
+  noteId: string;
+  title: string;
+  description: string;
+}) => {
+  const response = await axiosSetup.patch(
+    `/notes/update-note?noteId=${data.noteId}`,
+    {
+      title: data.title,
+      description: data.description,
+    },
+  );
+
+  return response.data;
+};

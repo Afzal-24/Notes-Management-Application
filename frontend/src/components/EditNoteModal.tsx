@@ -1,60 +1,60 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootDispatch, RootState } from "../store";
-import {
-  addNote,
-  getNoteStatuses,
-} from "../store/slices/notesManagement.slice";
-import { NoteStatusEnum } from "../models/notesManagement.model";
-import { ACCENT } from "../pages/App";
+import { updateNote } from "../store/slices/notesManagement.slice";
+import type { INote } from "../models/notesManagement.model";
 import { toast } from "sonner";
+import { ACCENT } from "../pages/App";
 
-interface AddNoteModalProps {
+interface EditNoteModalProps {
   open: boolean;
   onClose: () => void;
-  status: NoteStatusEnum;
+  note: INote;
 }
 
-const AddNoteModal: React.FC<AddNoteModalProps> = ({
+const EditNoteModal: React.FC<EditNoteModalProps> = ({
   open,
   onClose,
-  status,
+  note,
 }) => {
   const dispatch = useDispatch<RootDispatch>();
 
-  const { addNoteLoading } = useSelector(
+  const { updateNoteLoading } = useSelector(
     (state: RootState) => state.noteManagement.loadingStates,
   );
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState(note.title);
+  const [description, setDescription] = useState(note.description);
+
+  useEffect(() => {
+    setTitle(note.title);
+    setDescription(note.description);
+  }, [note]);
 
   if (!open) return null;
 
-  const handleCreate = async () => {
+  const handleUpdate = async () => {
     if (!title || !description) {
       toast.error("Title and description are required");
-
       return;
     }
+
     try {
       await dispatch(
-        addNote({
+        updateNote({
+          noteId: note._id,
           title,
           description,
-          status,
         }),
       ).unwrap();
 
-      dispatch(getNoteStatuses());
-
-      setTitle("");
-      setDescription("");
+      toast.success("Note updated successfully");
 
       onClose();
     } catch (error) {
       console.log(error);
+      toast.error("Failed to update note");
     }
   };
 
@@ -62,11 +62,11 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
       <div className="w-full max-w-md rounded-3xl bg-white shadow-2xl border border-gray-100 overflow-hidden">
         <div className="flex justify-between px-6 py-5 border-b">
-          <div className="text-left">
-            <h2 className="text-lg font-bold text-gray-800">Create New Note</h2>
+          <div>
+            <h2 className="text-lg font-bold text-gray-800">Edit Note</h2>
 
             <p className="text-sm text-gray-500 mt-1">
-              Add a new task to this column
+              Update note information
             </p>
           </div>
 
@@ -78,7 +78,7 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
           </button>
         </div>
 
-        <div className="p-6 space-y-5 text-left">
+        <div className="p-6 space-y-5">
           <div>
             <label className="text-sm font-medium text-gray-700 mb-2 block">
               Title
@@ -86,7 +86,6 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
 
             <input
               type="text"
-              placeholder="Enter note title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full h-12 text-gray-800 rounded-2xl border border-gray-200 px-4 text-sm outline-none transition focus:border-[#4f46e5] focus:ring-4 focus:ring-[#ede9fe]"
@@ -99,7 +98,6 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
             </label>
 
             <textarea
-              placeholder="Write note description..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={5}
@@ -117,11 +115,11 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
           </button>
 
           <button
-            onClick={handleCreate}
-            disabled={addNoteLoading}
+            onClick={handleUpdate}
+            disabled={updateNoteLoading}
             className="px-5 py-2.5 rounded-full text-sm font-semibold text-white transition disabled:opacity-50 bg-[#4f46e5] hover:opacity-90"
           >
-            {addNoteLoading ? "Creating..." : "Create Note"}
+            {updateNoteLoading ? "Updating..." : "Update Note"}
           </button>
         </div>
       </div>
@@ -129,4 +127,4 @@ const AddNoteModal: React.FC<AddNoteModalProps> = ({
   );
 };
 
-export default AddNoteModal;
+export default EditNoteModal;
