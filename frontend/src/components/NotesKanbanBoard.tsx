@@ -181,7 +181,7 @@ const NotesKanbanBoard: React.FC = () => {
       </DragOverlay>
 
       <div className="p-4">
-        <div className="flex gap-6 overflow-x-auto pb-4">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 overflow-y-auto lg:overflow-x-auto pb-4">
           {noteStatuses && noteStatuses.length > 0 ? (
             noteStatuses.map((status) => (
               <NotesKanbanColumn

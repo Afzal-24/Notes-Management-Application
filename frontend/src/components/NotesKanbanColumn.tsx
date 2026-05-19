@@ -61,7 +61,7 @@ const NotesKanbanColumn: React.FC<NotesKanbanColumnProps> = ({
   return (
     <div
       ref={setNodeRef}
-      className={`w-86 min-w-86 max-w-86 bg-[#F8FAFC] border border-gray-100 rounded-3xl shadow-sm px-2 py-4 flex flex-col overflow-hidden transition-all duration-150${
+      className={`w-full lg:w-86 lg:min-w-86 lg:max-w-86 bg-[#F8FAFC] border rounded-3xl shadow-sm px-2 py-4 flex flex-col overflow-hidden transition-all duration-150 ${
         isOver ? "bg-blue-50 border-blue-400" : "border-gray-100"
       }`}
     >
@@ -94,11 +94,11 @@ const NotesKanbanColumn: React.FC<NotesKanbanColumnProps> = ({
         items={notes.map((n) => n._id!)}
         strategy={verticalListSortingStrategy}
       >
-        <div className="flex-1 overflow-y-auto space-y-3 pr-1 px-2">
+        <div className="flex-1 overflow-y-auto space-y-3 pr-1 px-2 ">
           {notes && notes.length > 0 ? (
             notes.map((note) => <NotesKanbanCard key={note._id} note={note} />)
           ) : (
-            <div className="flex text-xs text-gray-400 mt-4 h-[55vh] text-center justify-center items-end">
+            <div className="flex text-xs text-gray-400 mt-4 h-24 lg:h-[55vh] text-center justify-center items-center lg:items-end">
               No notes in this column
             </div>
           )}
