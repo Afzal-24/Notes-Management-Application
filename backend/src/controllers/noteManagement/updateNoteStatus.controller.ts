@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import Note from "../models/note.model";
-import ResponseModel from "../models/response.model";
-import { sendResponse } from "../utils/response.util";
-import NoteStatusModel from "../models/noteStatuses.model";
+import Note from "../../models/note.model";
+import ResponseModel from "../../models/response.model";
+import { sendResponse } from "../../utils/response.util";
+import NoteStatusModel from "../../models/noteStatuses.model";
 
 const updateNoteStatus = async (req: any, res: any) => {
   const response: ResponseModel = {

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import Note from "../models/note.model";
-import ResponseModel from "../models/response.model";
-import { sendResponse } from "../utils/response.util";
+import Note from "../../models/note.model";
+import ResponseModel from "../../models/response.model";
+import { sendResponse } from "../../utils/response.util";
 
 export const updateNote = async (req: Request, res: Response) => {
   const response: ResponseModel = {

@@ -1,41 +1,36 @@
 import express from "express";
-import { addNote } from "../../controllers/addNote.controller";
-import authenticate from "../../middleware/auth.middleware";
-import { getNoteStatuses } from "../../controllers/getNoteStatuses.controller";
-import updateNoteStatus from "../../controllers/updateNoteStatus.controller";
-import { updateNote } from "../../controllers/updateNote.controller";
-import { deleteNote } from "../../controllers/deleteNote.controller";
+import * as noteController from "../../controllers/noteManagement";
 
 const router = express.Router();
 
 router.post(
   "/add-note",
   //  authenticate,
-  addNote,
+  noteController.addNote,
 );
 
 router.get(
   "/get-note-statuses",
   //  authenticate,
-  getNoteStatuses,
+  noteController.getNoteStatuses,
 );
 
 router.patch(
   "/update-note-status",
   //  authenticate,
-  updateNoteStatus,
+  noteController.updateNoteStatus,
 );
 
 router.patch(
   "/update-note",
   //  authenticate,
-  updateNote,
+  noteController.updateNote,
 );
 
 router.delete(
   "/delete-note",
   //  authenticate,
-  deleteNote,
+  noteController.deleteNote,
 );
 
 export default router;

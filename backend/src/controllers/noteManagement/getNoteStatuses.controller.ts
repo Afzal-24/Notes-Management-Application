@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import ResponseModel from "../models/response.model";
-import { sendResponse } from "../utils/response.util";
-import NoteStatusModel from "../models/noteStatuses.model";
+import ResponseModel from "../../models/response.model";
+import { sendResponse } from "../../utils/response.util";
+import NoteStatusModel from "../../models/noteStatuses.model";
 
 export const getNoteStatuses = async (req: Request, res: Response) => {
   const response: ResponseModel = {
