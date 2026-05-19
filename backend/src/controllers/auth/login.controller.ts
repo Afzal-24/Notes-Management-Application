@@ -5,12 +5,12 @@ import User from "../../models/user.model";
 
 export const logIn = async (req: Request, res: Response) => {
   try {
-    const { userName, email, password } = req.body;
+    const { userName, email, password } = req.body || {};
 
     if (!userName || !email || !password) {
       return res.status(400).json({
         success: false,
-        message: "All fields are required",
+        message: "Username, email and password are required",
       });
     }
 

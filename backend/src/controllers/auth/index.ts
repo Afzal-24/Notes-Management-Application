@@ -1,1 +1,3 @@
-export { logIn } from "./login.controller";
+import { logIn } from "./login.controller";
+
+export { logIn };
