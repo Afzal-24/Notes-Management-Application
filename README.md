@@ -102,3 +102,10 @@ PORT=000
 MONGO_URI=your_mongodb_connection
 SECRET_KEY=your_secret_key
 ```
+
+
+---
+<img width="1916" height="863" alt="Screenshot 2026-06-02 160148" src="https://github.com/user-attachments/assets/10b44a07-e78c-4d40-a3c1-d291bbdedb03" />
+<img width="1898" height="862" alt="Screenshot 2026-06-02 161140" src="https://github.com/user-attachments/assets/273ea992-3033-4a09-8161-4e7cf6f07d07" />
+<img width="1901" height="862" alt="Screenshot 2026-06-02 160707" src="https://github.com/user-attachments/assets/0c463f9e-de96-4a4c-bcb6-c844fbe42557" />
+
