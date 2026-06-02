@@ -105,13 +105,15 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
       <div
         ref={setNodeRef}
         style={style}
+        {...attributes}
+        {...listeners}
         className="w-full min-w-0 group bg-white rounded-2xl text-left p-4 border border-gray-100 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden cursor-grab active:cursor-grabbing"
       >
         <div className="flex items-start justify-between gap-2">
           <div className="flex-1 min-w-0">
             <h4
               title={note.title}
-              className="text-sm font-semibold text-gray-800 cursor-pointer line-clamp-2"
+              className="text-sm font-semibold text-gray-800 line-clamp-2"
             >
               {note.title}
             </h4>
@@ -131,13 +133,6 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
             >
               <EllipsisVertical size={16} className="text-gray-500" />
             </button>
-
-            <GripVertical
-              size={18}
-              {...attributes}
-              {...listeners}
-              className="cursor-grab active:cursor-grabbing text-gray-400 shrink-0 mt-1 "
-            />
 
             {openMenu && (
               <div className="absolute right-0 top-8 w-36 bg-white border border-gray-100 shadow-xl rounded-2xl p-1 z-50">
