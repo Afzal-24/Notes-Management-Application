@@ -126,7 +126,11 @@ const NotesKanbanCard: React.FC<NotesKanbanCardProps> = ({ note }) => {
             </p>
           </div>
 
-          <div ref={menuRef} className="flex items-start gap-1 relative">
+          <div
+            ref={menuRef}
+            onPointerDown={(e) => e.stopPropagation()}
+            className="flex items-start gap-1 relative"
+          >
             <button
               onClick={() => setOpenMenu((prev) => !prev)}
               className="p-1 rounded-lg hover:bg-gray-100 transition"
