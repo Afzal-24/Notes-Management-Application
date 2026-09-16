@@ -103,6 +103,11 @@ MONGO_URI=your_mongodb_connection
 SECRET_KEY=your_secret_key
 ```
 
+# 🔐 Login Credentials
+
+Email - admin@gmail.com
+Password - admin
+
 
 ---
 <img width="1916" height="863" alt="Screenshot 2026-06-02 160148" src="https://github.com/user-attachments/assets/10b44a07-e78c-4d40-a3c1-d291bbdedb03" />
